@@ -6,29 +6,48 @@
     <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.4/dist/mindar-image-aframe.prod.js"></script>
   </head>
   <body>
-    <a-scene mindar-image="imageTargetSrc: https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.4/examples/image-tracking/assets/card-example/card.mind;" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+    <div id="totolink" class="center">
+      TOTO
+    </div>
+    <a-scene mindar-image="imageTargetSrc: ./targets_2.mind;" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
       <a-assets>
-        <img id="card" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.4/examples/image-tracking/assets/card-example/card.png" />
-        <a-asset-item id="avatarModel" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.4/examples/image-tracking/assets/card-example/softmind/scene.gltf"></a-asset-item>
+        <a-asset-item id="avatarModel" src="/toto.glb"></a-asset-item>
+        <a-asset-item id="coolguyModel" src="/coolguy.gltf"></a-asset-item>
       </a-assets>
-
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
-      <a-entity mindar-image-target="targetIndex: 0">
-        <a-plane src="#card" position="0 0 0" height="0.552" width="1" rotation="0 0 0"></a-plane>
-        <a-gltf-model rotation="0 0 0 " position="0 0 0.1" scale="0.005 0.005 0.005" src="#avatarModel" animation="property: position; to: 0 0.1 0.1; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate">
-      </a-entity>
-    </a-scene>
-	<a-scene mindar-image="imageTargetSrc: docs/assets/targets.mind;" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
-      <a-assets>
-        <img id="card" src="docs/assets/cube_img.png" />
-        <a-asset-item id="avatarModel" src="docs/assets/cube.gltf"></a-asset-item>
-      </a-assets>
 
-      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
       <a-entity mindar-image-target="targetIndex: 0">
-        <a-plane src="#card" position="0 0 0" height="0.552" width="1" rotation="0 0 0"></a-plane>
-        <a-gltf-model rotation="0 0 0 " position="0 0 0.1" scale="0.005 0.005 0.005" src="#avatarModel" animation="property: position; to: 0 0.1 0.1; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate">
+        <a-gltf-model rotation="0 90 0 " position="0 0 0.1" scale="0.5 0.5 0.5" src="#avatarModel">
       </a-entity>
+
+      <!-- <a-entity id="coolguy" mindar-image-target="targetIndex: 1"> -->
+        <!-- <a-gltf-model rotation="0 0 0 " position="0 -0.25 0" scale="0.05 0.05 0.05" src="#coolguyModel"> -->
+      <!-- </a-entity> -->
     </a-scene>
+    
   </body>
+  <style>
+    .center {
+  margin: auto;
+  width: 50%;
+  border: 3px solid green;
+  padding: 10px;
+  visibility: hidden;
+}
+  </style>
+  <script>
+	const sceneEl = document.querySelector('a-scene');
+	sceneEl.addEventListener("arReady", (event) => {
+		console.log("MindAR is ready")
+	});
+	
+	const exampleTarget = document.querySelector('#coolguy');
+	exampleTarget.addEventListener("targetFound", event => {
+		document.getElementById("totolink").style.visibility = "visible";
+	});
+	// detect target lost
+exampleTarget.addEventListener("targetLost", event => {
+  document.getElementById("totolink").style.visibility = "hidden";
+});
+  </script>
 </html>
